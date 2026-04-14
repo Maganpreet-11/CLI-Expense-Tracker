@@ -1,8 +1,19 @@
 expenses = []
 
 def add_expenses():
-    amount = float(input("Enter amount: "))
-    category = input("Enter category: ")
+    try:
+        amount = float(input("Enter amount: ₹"))
+        if amount <= 0:
+            print("❌ Amount must be greater than 0.\n")
+            return
+    except ValueError:
+        print("❌ Invalid amount! Please enter a number.\n")
+        return
+
+    category = input("Enter category: ").strip()
+    if not category:
+        print("❌ Category cannot be empty.\n")
+        return
 
     expense = {
         "amount": amount,
@@ -12,15 +23,21 @@ def add_expenses():
     expenses.append(expense)
     print("✅ Expense added successfully!\n")
 
+
 def view_expenses():
     if not expenses:
-       print("⚠️ No expenses recorded.\n")
-       return 
+        print("⚠️ No expenses recorded.\n")
+        return 
     
     print("\n📄 All Expenses:")
-    for i,exp in enumerate(expenses):
+    total = 0
+
+    for i, exp in enumerate(expenses):
         print(f"{i+1}. ₹{exp['amount']} - {exp['category']}")
-    print()
+        total += exp['amount']
+
+    print(f"\n💰 Total Expenses: ₹{total}\n")
+
 
 def delete_expense():
     if not expenses:
@@ -28,13 +45,19 @@ def delete_expense():
         return
     
     view_expenses()
-    index = int(input("Enter expense number to delete: ")) - 1
+
+    try:
+        index = int(input("Enter expense number to delete: ")) - 1
+    except ValueError:
+        print("❌ Please enter a valid number.\n")
+        return
 
     if 0 <= index < len(expenses):
         removed = expenses.pop(index)
         print(f"🗑️ Deleted: ₹{removed['amount']} - {removed['category']}\n")
     else:
         print("❌ Invalid index!\n")
+
 
 def show_menu():
     print("===== Expense Tracker =====")
@@ -43,10 +66,12 @@ def show_menu():
     print("3. Delete Expense")
     print("4. Exit")
 
+
 def main():
     while True:
         show_menu()
-        choice = input("Enter your choice: ")
+        choice = input("Enter your choice: ").strip()
+
         if choice == "1":
             add_expenses()
         elif choice == "2":
@@ -58,6 +83,7 @@ def main():
             break
         else:
             print("❌ Invalid choice! Try again.\n")
+
 
 if __name__ == "__main__":
     main()
