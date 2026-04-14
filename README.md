@@ -1,2 +1,14 @@
-# CLI-Expense-Tracker
-CLI Expense Tracker is a Python-based command-line app to manage daily expenses. Users can add, view, and delete entries with data stored using file handling. It focuses on core programming, clean logic, and building consistent coding habits through a simple, functional system.
+# CLI Expense Tracker
+
+A simple command-line expense tracker built using Python.
+
+## Features
+- Add expenses (amount + category)
+- View all expenses
+
+## Tech Stack
+- Python (Core)
+
+## How to Run
+```bash
+python main.py
