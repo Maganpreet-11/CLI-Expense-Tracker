@@ -1,4 +1,15 @@
-expenses = []
+import json
+def load_expenses():
+    global expenses
+    try:
+        with open("expenses.json", "r") as file:
+            expenses = json.load(file)
+    except:
+        expenses = []
+
+def save_expenses():
+    with open("expenses.json", "w") as file:
+        json.dump(expenses, file)
 
 def add_expenses():
     try:
@@ -21,6 +32,7 @@ def add_expenses():
     }
 
     expenses.append(expense)
+    save_expenses()
     print("✅ Expense added successfully!\n")
 
 
@@ -54,6 +66,7 @@ def delete_expense():
 
     if 0 <= index < len(expenses):
         removed = expenses.pop(index)
+        save_expenses()
         print(f"🗑️ Deleted: ₹{removed['amount']} - {removed['category']}\n")
     else:
         print("❌ Invalid index!\n")
@@ -68,6 +81,7 @@ def show_menu():
 
 
 def main():
+    load_expenses()
     while True:
         show_menu()
         choice = input("Enter your choice: ").strip()
